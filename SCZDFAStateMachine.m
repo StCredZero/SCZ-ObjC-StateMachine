@@ -3,7 +3,7 @@
 //  SCZObjCStateMachine
 //
 //  Created by Peter Suk on 6/2/12.
-//  Copyright (c) 2012 Ooghamist LLC. All rights reserved.
+//  Copyright (c) 2012 Peter Suk. All rights reserved.
 //
 //  Distributed under the permissive zlib License
 //  Get the latest version from here:
