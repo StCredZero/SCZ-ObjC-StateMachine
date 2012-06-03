@@ -77,6 +77,7 @@ Implements a simple DFA for test purposes.
         case 'B': self.nextStateName = @"T1StateB2"; break;
     } 
     [self increment];
+    [self finishTransition];
 }
 - (BOOL)isFinalState { return NO; }
 @end
@@ -93,6 +94,7 @@ Implements a simple DFA for test purposes.
         self.nextStateName = @"T1InitialState";
     }
     [self increment];
+    [self finishTransition];
 }
 - (BOOL)isFinalState { return NO; }
 @end
@@ -109,6 +111,7 @@ Implements a simple DFA for test purposes.
         self.nextStateName = @"T1InitialState";
     }
     [self increment];
+    [self finishTransition];
 }
 - (BOOL)isFinalState { return NO; }
 @end

@@ -35,6 +35,10 @@
 @synthesize nextStateName;
 @synthesize stateMachine;
 - (void)run {}
+- (void)finishTransition
+{
+    [self.stateMachine transitionDidFinish:self.nextStateName];
+}
 - (BOOL)isFinalState { return NO; }
 @end
 
@@ -77,14 +81,21 @@
 {
     [self.stateInstance setStateMachine:self];
     [self.stateInstance run];
-    NSString *nextStateName = [self.stateInstance nextStateName];
+}
+
+- (void)transitionDidFinish:(NSString*)nextStateName
+{
     self.stateName = nextStateName;
 }
 
 - (BOOL)isInFinalState
 {
     if (self.stateInstance == nil)
-        return NO;
+    {
+        // The state name is something we can't find a class for
+        // so we should stop
+        return YES; 
+    }
     
     return [self.stateInstance isFinalState];
 }

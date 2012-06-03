@@ -39,6 +39,7 @@
 @property (nonatomic, weak) SCZDFAStateMachine * stateMachine;
 
 - (void)run;
+- (void)finishTransition;
 - (NSString *)nextStateName;
 - (BOOL)isFinalState;
 
@@ -63,6 +64,7 @@
 @property (nonatomic, strong) id stateInstance;
 
 - (void)transitionState;
+- (void)transitionDidFinish:(NSString*)nextStateName;
 - (BOOL)isInFinalState;
 
 @end
