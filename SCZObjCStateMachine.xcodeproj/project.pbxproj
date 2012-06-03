@@ -30,6 +30,7 @@
 		18D9D957157AE7BC00BBC165 /* ObjCStateMachineUnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjCStateMachineUnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		18D9D95B157AEA3800BBC165 /* RegexpTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexpTest1.h; sourceTree = "<group>"; };
 		18D9D95C157AEA3800BBC165 /* RegexpTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexpTest1.m; sourceTree = "<group>"; };
+		18D9D962157B0B2D00BBC165 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +50,7 @@
 		18D9D935157ACAE100BBC165 = {
 			isa = PBXGroup;
 			children = (
+				18D9D962157B0B2D00BBC165 /* README.md */,
 				18D9D93E157ACC4D00BBC165 /* SCZDFAStateMachine.h */,
 				18D9D93F157ACC4D00BBC165 /* SCZDFAStateMachine.m */,
 				18D9D94E157AE7BC00BBC165 /* ObjCStateMachineUnitTests */,
