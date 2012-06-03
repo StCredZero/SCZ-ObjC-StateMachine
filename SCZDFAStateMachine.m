@@ -49,7 +49,21 @@
 
 - (void)setStateName:(NSString*)aStateName
 {
+#if __has_feature(objc_arc)
+#else
+    if (stateInstance)
+    {
+        [stateInstance release];
+    }
+#endif
     stateInstance = [[NSClassFromString(aStateName) alloc] init];
+#if __has_feature(objc_arc)
+#else
+    if (stateInstance)
+    {
+        [stateInstance retain];
+    }
+#endif
 }
 
 - (NSString*)stateName
