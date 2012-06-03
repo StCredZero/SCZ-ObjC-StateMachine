@@ -11,7 +11,6 @@
 /*
  
 Implements a simple DFA for test purposes.
-
  
             <Initial>
              /     \
@@ -22,7 +21,13 @@ Implements a simple DFA for test purposes.
             A       B
              \     /
              <Final>
+ 
+ This is just the regular expression (.*(AA|BB))
 
+ You shouldn't use an OOP state machine framework like this for 
+ something that needs to be tight and fast like parsing regexp,
+ but we implemented this as a simple example for the test.
+ 
  */
 
 @implementation T1StateMachine
@@ -83,6 +88,10 @@ Implements a simple DFA for test purposes.
     {
         self.nextStateName = @"T1FinalState";
     }
+    else 
+    {
+        self.nextStateName = @"T1InitialState";
+    }
     [self increment];
 }
 - (BOOL)isFinalState { return NO; }
@@ -94,6 +103,10 @@ Implements a simple DFA for test purposes.
     if ([self currentChar] == 'B')
     {
         self.nextStateName = @"T1FinalState";
+    }
+    else 
+    {
+        self.nextStateName = @"T1InitialState";
     }
     [self increment];
 }
