@@ -34,6 +34,7 @@
 
 @class SCZDFAStateMachine;
 
+#pragma mark - SCZDFAState
 @protocol SCZDFAState <NSObject>
 
 @property (nonatomic, weak) SCZDFAStateMachine * stateMachine;
@@ -45,6 +46,7 @@
 
 @end
 
+
 @interface SCZDFAAbstractState :  NSObject <SCZDFAState>
 {
     NSString *nextStateName;
@@ -53,18 +55,22 @@
 @property (nonatomic, strong) NSString *nextStateName;
 @end
 
-
+#pragma mark - SCZDFAStateMachine
 @interface SCZDFAStateMachine : NSObject
 {
     NSString *stateName;
     id stateInstance;
+    NSOperationQueue *operationQueue;
+    
 }
 
 @property (nonatomic, strong) NSString *stateName;
 @property (nonatomic, strong) id stateInstance;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
 
 - (void)transitionState;
 - (void)transitionDidFinish:(NSString*)nextStateName;
 - (BOOL)isInFinalState;
+- (void)waitUntilFinalState;
 
 @end

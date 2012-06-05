@@ -31,6 +31,7 @@
 
 #import "SCZDFAStateMachine.h"
 
+#pragma mark - SCZDFAState
 @implementation SCZDFAAbstractState
 @synthesize nextStateName;
 @synthesize stateMachine;
@@ -42,6 +43,8 @@
 - (BOOL)isFinalState { return NO; }
 @end
 
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark - SCZDFAStateMachine
 @implementation SCZDFAStateMachine
 {
     NSString *currentState;
@@ -50,6 +53,17 @@
 
 @synthesize stateName;
 @synthesize stateInstance;
+@synthesize operationQueue;
+
+-(id)init
+{
+    if (self = [super init])
+    {
+        self.operationQueue = [[NSOperationQueue alloc] init];
+        [self.operationQueue setMaxConcurrentOperationCount:1];
+    }
+    return self;
+}
 
 - (void)setStateName:(NSString*)aStateName
 {
@@ -80,12 +94,19 @@
 - (void)transitionState
 {
     [self.stateInstance setStateMachine:self];
-    [self.stateInstance run];
+    [self.operationQueue addOperationWithBlock: 
+     ^{
+        [self.stateInstance run];
+     }];
 }
 
 - (void)transitionDidFinish:(NSString*)nextStateName
 {
     self.stateName = nextStateName;
+    if ( ! [self isInFinalState])
+    {
+        [self transitionState];
+    }
 }
 
 - (BOOL)isInFinalState
@@ -98,6 +119,11 @@
     }
     
     return [self.stateInstance isFinalState];
+}
+
+- (void)waitUntilFinalState
+{
+    [self.operationQueue waitUntilAllOperationsAreFinished];
 }
 
 @end

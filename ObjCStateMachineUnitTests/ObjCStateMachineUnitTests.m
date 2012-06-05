@@ -31,9 +31,7 @@
     stateMachine.inputString = @"AA";
     stateMachine.stateName = @"T1InitialState";
     [stateMachine transitionState];
-    STAssertFalse([stateMachine isInFinalState],@"Should not be in final state");
-    STAssertTrue([stateMachine.stateName isEqualToString:@"T1StateA2"],@"Should be in T1StateA2");
-    [stateMachine transitionState];
+    [stateMachine waitUntilFinalState];
     STAssertTrue([stateMachine isInFinalState],@"Should be in final state");
 }
 
@@ -43,9 +41,7 @@
     stateMachine.inputString = @"BB";
     stateMachine.stateName = @"T1InitialState";
     [stateMachine transitionState];
-    STAssertFalse([stateMachine isInFinalState],@"Should not be in final state");
-    STAssertTrue([stateMachine.stateName isEqualToString:@"T1StateB2"],@"Should be in T1StateB2");
-    [stateMachine transitionState];
+    [stateMachine waitUntilFinalState];
     STAssertTrue([stateMachine isInFinalState],@"Should be in final state");
 }
 
