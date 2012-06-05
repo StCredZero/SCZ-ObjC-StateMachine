@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1854C643157EA38900FC60AF /* NSOperationQueueTimeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1854C642157EA38900FC60AF /* NSOperationQueueTimeout.m */; };
 		18D9D949157AE7BC00BBC165 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D9D948157AE7BC00BBC165 /* SenTestingKit.framework */; };
 		18D9D94B157AE7BC00BBC165 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D9D94A157AE7BC00BBC165 /* UIKit.framework */; };
 		18D9D94D157AE7BC00BBC165 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D9D94C157AE7BC00BBC165 /* Foundation.framework */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1854C641157EA38900FC60AF /* NSOperationQueueTimeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOperationQueueTimeout.h; sourceTree = "<group>"; };
+		1854C642157EA38900FC60AF /* NSOperationQueueTimeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSOperationQueueTimeout.m; sourceTree = "<group>"; };
 		18D9D93E157ACC4D00BBC165 /* SCZDFAStateMachine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCZDFAStateMachine.h; sourceTree = "<group>"; };
 		18D9D93F157ACC4D00BBC165 /* SCZDFAStateMachine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCZDFAStateMachine.m; sourceTree = "<group>"; };
 		18D9D945157AE7BC00BBC165 /* ObjCStateMachineUnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObjCStateMachineUnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +56,8 @@
 				18D9D962157B0B2D00BBC165 /* README.md */,
 				18D9D93E157ACC4D00BBC165 /* SCZDFAStateMachine.h */,
 				18D9D93F157ACC4D00BBC165 /* SCZDFAStateMachine.m */,
+				1854C641157EA38900FC60AF /* NSOperationQueueTimeout.h */,
+				1854C642157EA38900FC60AF /* NSOperationQueueTimeout.m */,
 				18D9D94E157AE7BC00BBC165 /* ObjCStateMachineUnitTests */,
 				18D9D947157AE7BC00BBC165 /* Frameworks */,
 				18D9D946157AE7BC00BBC165 /* Products */,
@@ -181,6 +186,7 @@
 				18D9D961157AFB0B00BBC165 /* SCZDFAStateMachine.m in Sources */,
 				18D9D956157AE7BC00BBC165 /* ObjCStateMachineUnitTests.m in Sources */,
 				18D9D95D157AEA3800BBC165 /* RegexpTest1.m in Sources */,
+				1854C643157EA38900FC60AF /* NSOperationQueueTimeout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +295,7 @@
 				18D9D95A157AE7BC00BBC165 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

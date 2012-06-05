@@ -7,6 +7,7 @@
 //
 
 #import "RegexpTest1.h"
+#import "NSOperationQueueTimeout.h"
 #import "ObjCStateMachineUnitTests.h"
 
 @implementation ObjCStateMachineUnitTests
@@ -45,4 +46,19 @@
     STAssertTrue([stateMachine isInFinalState],@"Should be in final state");
 }
 
+/*
+- (void)testQueueTimeout
+{
+    NSOperationQueue *myQueue = [[NSOperationQueue alloc] init];
+    [myQueue addOperationWithBlock: ^{
+        while (YES)
+        {
+            NSLog(@"In an infinite loop!");
+        }
+    }];
+    [NSOperationQueueTimeout withQueue: myQueue 
+                              interval:1.0f];
+    STAssertTrue(YES,@"Made it back out!");
+}
+*/
 @end

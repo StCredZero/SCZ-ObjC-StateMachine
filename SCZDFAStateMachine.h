@@ -61,7 +61,6 @@
     NSString *stateName;
     id stateInstance;
     NSOperationQueue *operationQueue;
-    
 }
 
 @property (nonatomic, strong) NSString *stateName;
