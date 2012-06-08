@@ -108,9 +108,15 @@
     }
 }
 
+- (void)doPreState
+{
+
+}
+
 - (void)transitionState
 {
     [self.stateInstance setStateMachine:self];
+    [self doPreState];
     if (self.synchronous)
     {
         [self.stateInstance run];
@@ -123,15 +129,22 @@
     }
 }
 
+- (void)doPostState:(NSString*)nextStateName
+{
+    
+}
+
 - (void)transitionDidFinish:(id)state
 {
     NSString *nextStateName = [self nextStateNameFor:state];
+    [self doPostState:nextStateName];
     self.stateName = nextStateName;
-    if (self.synchronous)
-        if ( ! [self isInFinalState])
-        {
-            [self transitionState];
-        }
+    if (self.synchronous) return;
+    
+    if ( ! [self isInFinalState])
+    {
+        [self transitionState];
+    }
 }
 
 - (NSString*)nextStateNameFor:(id)state
