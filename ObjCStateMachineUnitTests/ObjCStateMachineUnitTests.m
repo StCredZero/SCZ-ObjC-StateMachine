@@ -31,8 +31,7 @@
     T1StateMachine *stateMachine = [[T1StateMachine alloc] init];
     stateMachine.inputString = @"AA";
     stateMachine.stateName = @"T1InitialState";
-    [stateMachine transitionState];
-    [stateMachine waitUntilFinalState];
+    [stateMachine start];
     STAssertTrue([stateMachine isInFinalState],@"Should be in final state");
 }
 
@@ -41,8 +40,7 @@
     T1StateMachine *stateMachine = [[T1StateMachine alloc] init];
     stateMachine.inputString = @"BB";
     stateMachine.stateName = @"T1InitialState";
-    [stateMachine transitionState];
-    [stateMachine waitUntilFinalState];
+    [stateMachine start];
     STAssertTrue([stateMachine isInFinalState],@"Should be in final state");
 }
 

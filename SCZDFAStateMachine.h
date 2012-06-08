@@ -31,6 +31,7 @@
 
 #import <UIKit/UIKit.h>
 #include "objc/runtime.h"
+#import <dispatch/dispatch.h>
 
 @class SCZDFAStateMachine;
 
@@ -60,16 +61,18 @@
 {
     NSString *stateName;
     id stateInstance;
-    NSOperationQueue *operationQueue;
+    dispatch_queue_t backgroundQueue;
+    BOOL synchronous;
 }
 
 @property (nonatomic, strong) NSString *stateName;
 @property (nonatomic, strong) id stateInstance;
-@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property (nonatomic, assign) BOOL synchronous;
 
+- (void)start;
 - (void)transitionState;
-- (void)transitionDidFinish:(NSString*)nextStateName;
+- (void)transitionDidFinish:(id)state;
+- (NSString*)nextStateNameFor:(id)state;
 - (BOOL)isInFinalState;
-- (void)waitUntilFinalState;
 
 @end

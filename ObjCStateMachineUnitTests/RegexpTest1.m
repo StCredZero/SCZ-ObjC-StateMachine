@@ -48,7 +48,31 @@ Implements a simple DFA for test purposes.
 {
     return [self.inputString characterAtIndex:self.index];
 }
-
+- (NSString*)nextStateNameFor:(id)state
+{
+    T1State *t1State = (T1State*)state;
+    
+    if ([t1State isKindOfClass:[T1InitialState class]])
+    {
+        return t1State.nextStateName;
+    }
+    else if ([t1State isKindOfClass:[T1StateA2 class]])
+    {
+        return t1State.nextStateName;
+    }
+    else if ([t1State isKindOfClass:[T1StateB2 class]])
+    {
+        return t1State.nextStateName;
+    }
+    else if ([t1State isKindOfClass:[T1FinalState class]])
+    {
+        return t1State.nextStateName;
+    }
+    else 
+    {
+        return @"T1InitialState";
+    }
+}
 @end
 
 @implementation T1State

@@ -35,10 +35,11 @@
 @implementation SCZDFAAbstractState
 @synthesize nextStateName;
 @synthesize stateMachine;
+
 - (void)run {}
 - (void)finishTransition
 {
-    [self.stateMachine transitionDidFinish:self.nextStateName];
+    [self.stateMachine transitionDidFinish:self];
 }
 - (BOOL)isFinalState { return NO; }
 @end
@@ -53,14 +54,15 @@
 
 @synthesize stateName;
 @synthesize stateInstance;
-@synthesize operationQueue;
+@synthesize synchronous;
 
 -(id)init
 {
     if (self = [super init])
     {
-        self.operationQueue = [[NSOperationQueue alloc] init];
-        [self.operationQueue setMaxConcurrentOperationCount:1];
+        NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString];
+        backgroundQueue = dispatch_queue_create([guid UTF8String], NULL);  
+        self.synchronous = YES;
     }
     return self;
 }
@@ -91,22 +93,50 @@
     return NSStringFromClass([self.stateInstance class]);
 }
 
-- (void)transitionState
+- (void)start
 {
-    [self.stateInstance setStateMachine:self];
-    [self.operationQueue addOperationWithBlock: 
-     ^{
-        [self.stateInstance run];
-     }];
-}
-
-- (void)transitionDidFinish:(NSString*)nextStateName
-{
-    self.stateName = nextStateName;
-    if ( ! [self isInFinalState])
+    if (self.synchronous)
+    {
+        while( ! [self isInFinalState])
+        {
+            [self transitionState];
+        }
+    }
+    else 
     {
         [self transitionState];
     }
+}
+
+- (void)transitionState
+{
+    [self.stateInstance setStateMachine:self];
+    if (self.synchronous)
+    {
+        [self.stateInstance run];
+    }
+    else 
+    {
+        dispatch_async(backgroundQueue, ^(void) {
+            [self.stateInstance run];
+        });  
+    }
+}
+
+- (void)transitionDidFinish:(id)state
+{
+    NSString *nextStateName = [self nextStateNameFor:state];
+    self.stateName = nextStateName;
+    if (self.synchronous)
+        if ( ! [self isInFinalState])
+        {
+            [self transitionState];
+        }
+}
+
+- (NSString*)nextStateNameFor:(id)state
+{
+    return @"Should override this";
 }
 
 - (BOOL)isInFinalState
@@ -121,9 +151,9 @@
     return [self.stateInstance isFinalState];
 }
 
-- (void)waitUntilFinalState
+- (void)dealloc
 {
-    [self.operationQueue waitUntilAllOperationsAreFinished];
+    dispatch_release(backgroundQueue);
 }
 
 @end
