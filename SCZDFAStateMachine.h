@@ -40,10 +40,15 @@
 
 @property (nonatomic, weak) SCZDFAStateMachine * stateMachine;
 
-- (void)run;
+- (void)runInMachine:(id)fsm;
+- (void)setForMachine:(id)fsm;
 - (void)finishTransition;
 - (NSString *)nextStateName;
 - (BOOL)isFinalState;
+
+- (NSString*)stateLabel;
+- (double)nextTransitionDelay;
+- (NSInteger)maxCount;
 
 @end
 
@@ -63,11 +68,15 @@
     id stateInstance;
     dispatch_queue_t backgroundQueue;
     BOOL synchronous;
+    BOOL transitioning;
+    NSMutableDictionary *stateCounts;
 }
 
 @property (nonatomic, strong) NSString *stateName;
 @property (nonatomic, strong) id stateInstance;
 @property (nonatomic, assign) BOOL synchronous;
+@property (nonatomic, assign) BOOL transitioning;
+@property (nonatomic, strong) NSMutableDictionary *stateCounts;
 
 - (void)start;
 - (void)transitionState;
@@ -75,4 +84,5 @@
 - (NSString*)nextStateNameFor:(id)state;
 - (BOOL)isInFinalState;
 
+- (NSString*)failureStateName;
 @end

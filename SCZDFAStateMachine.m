@@ -36,12 +36,44 @@
 @synthesize nextStateName;
 @synthesize stateMachine;
 
-- (void)run {}
+- (void)runInMachine:(id)fsm
+{
+    [self setForMachine:(id)fsm];
+    // You fill in the rest below
+    [self finishTransition];
+}
+
+- (void)setForMachine:(id)fsm
+{
+    SCZDFAStateMachine *myStateMachine = (SCZDFAStateMachine*)fsm;
+    [self setStateMachine:myStateMachine];
+}
+
 - (void)finishTransition
 {
-    [self.stateMachine transitionDidFinish:self];
+    if (self.stateMachine)
+        [self.stateMachine transitionDidFinish:self];
 }
+
 - (BOOL)isFinalState { return NO; }
+
+- (void)run {}
+
+- (NSString*)stateLabel
+{
+    return [NSString stringWithFormat:@"Waiting"];
+}
+
+- (double)nextTransitionDelay
+{
+    return 0.3f;
+}
+
+- (NSInteger)maxCount
+{
+    return 20;
+}
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,6 +87,8 @@
 @synthesize stateName;
 @synthesize stateInstance;
 @synthesize synchronous;
+@synthesize transitioning;
+@synthesize stateCounts;
 
 -(id)init
 {
@@ -113,25 +147,44 @@
 
 }
 
+- (NSInteger)preCountForState
+{
+    if ([self.stateCounts objectForKey:self.stateName])
+    {
+        NSInteger count = [[self.stateCounts objectForKey:self.stateName] integerValue] + 1;
+        [self.stateCounts setObject:[NSNumber numberWithInteger:count] forKey:self.stateName];
+        return count;
+    }
+    [self.stateCounts setObject:[NSNumber numberWithInteger:1] forKey:self.stateName];
+    return 1;
+}
+
 - (void)transitionState
 {
-    [self.stateInstance setStateMachine:self];
-    [self doPreState];
-    if (self.synchronous)
+    @synchronized(self)
     {
-        [self.stateInstance run];
-    }
-    else 
-    {
-        dispatch_async(backgroundQueue, ^(void) {
-            [self.stateInstance run];
-        });  
+        if ( ! self.transitioning)
+        {
+            if ([self preCountForState] <= [self.stateInstance maxCount])
+            {
+                self.transitioning = YES;
+                [self doPreState];
+                [self.stateInstance runInMachine:self];
+            }
+            else
+            {
+                self.transitioning = YES;
+                self.stateName = [self failureStateName];
+                [self doPreState];
+                [self.stateInstance runInMachine:self];
+            }
+        }
     }
 }
 
-- (void)doPostState:(NSString*)nextStateName
+- (NSString*)failureStateName
 {
-    
+    return @"SCZFailureState";
 }
 
 - (void)transitionDidFinish:(id)state
@@ -145,6 +198,11 @@
     {
         [self transitionState];
     }
+}
+
+- (void)doPostState:(NSString*)nextStateName
+{
+    
 }
 
 - (NSString*)nextStateNameFor:(id)state
